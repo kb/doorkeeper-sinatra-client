@@ -34,7 +34,7 @@ class DoorkeeperClient < Sinatra::Base
     OAuth2::Client.new(
       ENV['OAUTH2_CLIENT_ID'],
       ENV['OAUTH2_CLIENT_SECRET'],
-      :site         => ENV['SITE'] || "http://doorkeeper-provider.herokuapp.com",
+      :site => ENV['SITE'],
       :token_method => token_method,
     )
   end
@@ -52,7 +52,7 @@ class DoorkeeperClient < Sinatra::Base
   end
 
   get '/sign_in' do
-    scope = params[:scope] || "public"
+    scope = params[:scope] || "read"
     redirect client.auth_code.authorize_url(:redirect_uri => redirect_uri, :scope => scope)
   end
 
@@ -75,10 +75,9 @@ class DoorkeeperClient < Sinatra::Base
     redirect '/'
   end
 
-  get '/explore/:api' do
-    raise "Please call a valid endpoint" unless params[:api]
+  get '/explore/*' do
     begin
-      response = access_token.get("/api/v1/#{params[:api]}")
+      response = access_token.get("/api/v3/#{params[:splat].first}")
       @json = JSON.parse(response.body)
       erb :explore, :layout => !request.xhr?
     rescue OAuth2::Error => @error
