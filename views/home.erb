@@ -13,11 +13,12 @@
   <div class="row">
     <div class="span16">
       <% if signed_in? %>
-        <h2>Explore the API</h2>
+        <h2>Try it out</h2>
 
         <div class="well">
-          <a href="/explore/me.json" class="btn" data-explore>My Credentials</a>
-          <a href="/explore/profiles.json" class="btn" data-explore>Profiles</a>
+          <a href="/explore/account.json" class="btn" data-explore>Account</a>
+          <a href="/explore/account/identities.json" class="btn" data-explore>Identities</a>
+          <a href="/explore/account/email_routings.json" class="btn" data-explore>Email Routings</a>
           <a href="/sign_out" class="btn primary">Sign out</a>
         </div>
 
@@ -25,14 +26,6 @@
 
         <p><pre id="display-json">Select one of the api methods above</pre></p>
       <% end %>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="row">
-    <div class="span16">
-    <%= markdown_readme %>
     </div>
   </div>
 </section>
